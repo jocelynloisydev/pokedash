@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common'
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { Pokeapi } from '../../core/pokeapi/pokeapi'
+import { PokemonCard } from '../pokemon-card/pokemon-card'
+import { MaterialModule } from '../../material/material.module'
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressBarModule],
+  imports: [CommonModule, MaterialModule, MatCardModule, MatProgressBarModule, PokemonCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +12,21 @@ export class Pokeapi {
 
   getPokemonCount(): Observable<{ count: number }> {
     return this.http.get<{ count: number }>(`${this.baseUrl}/pokemon?limit=1`)
+  }
+
+  getPokemon(id: number) {
+    console.log('➡️ Appel API getPokemon(', id, ')')
+    return this.http.get<any>(`${this.baseUrl}/pokemon/${id}`).pipe(
+      map(res => {
+        console.log('⬅️ Réponse API getPokemon :', res)
+        return res
+      })
+    )
+  }
+
+  getRandomPokemon() {
+    const randomId = Math.floor(Math.random() * 898) + 1 // Génération 1 à 8
+    console.log('🎲 ID aléatoire généré :', randomId);
+    return this.getPokemon(randomId)
   }
 }
