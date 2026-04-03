@@ -1,1 +1,15 @@
-<p>dashboard works!</p>
+<mat-card>
+  <mat-card-title>Pokédash</mat-card-title>
+  <mat-card-content>
+    <ng-container *ngIf="!loading; else loadingTpl">
+      <p>
+        Nombre total de Pokémon : <strong>{{ pokemonCount }}</strong>
+      </p>
+    </ng-container>
+
+    <ng-template #loadingTpl>
+      <p>Chargement des données…</p>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
