@@ -3,7 +3,7 @@
   <ng-container *ngIf="!loading(); else loadingTpl">
 
     <div class="pokemon-grid">
-      <div class="pokemon-mini-card" *ngFor="let p of pokemons()">
+      <div class="pokemon-mini-card" *ngFor="let p of pokemons()" (click)="openPokemon(p.name)" [style.background]="getBgColor(p)">
 
         <img
           [src]="p.sprites?.other?.['official-artwork']?.front_default || p.sprites?.front_default"

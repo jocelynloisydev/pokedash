@@ -4,6 +4,7 @@ import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { MaterialModule } from '../../material/material.module'
 import { TypeChip } from '../../shared/components/type-chip/type-chip'
 import { Loader } from '../../shared/components/loader/loader'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-pokemon-card',
@@ -16,7 +17,10 @@ export class PokemonCard implements OnInit {
   pokemon = signal<any>(null)
   loading = signal(true)
 
-  constructor(private pokeapi: Pokeapi) {}
+  constructor(
+    private pokeapi: Pokeapi,
+    private route: ActivatedRoute
+  ) {}
 
   typeColors: Record<string, string> = {
     fire: '#EE8130',
@@ -40,7 +44,26 @@ export class PokemonCard implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadRandomPokemon()
+    const name = this.route.snapshot.paramMap.get('name')
+
+    if (name) {
+      this.loadPokemon(name)
+    }
+    else {
+      this.loadRandomPokemon()
+    }
+  }
+
+  loadPokemon(name: string) {
+    this.loading.set(true)
+
+    this.pokeapi.getPokemonByName(name).subscribe({
+      next: res => {
+        this.pokemon.set(res)
+        this.loading.set(false)
+      },
+      error: () => this.loading.set(false),
+    })
   }
 
   loadRandomPokemon() {

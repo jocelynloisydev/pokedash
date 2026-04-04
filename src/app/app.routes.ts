@@ -11,4 +11,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'dashboard',
   },
+  {
+    path: 'pokemon/:name',
+    loadComponent: () => import('./features/pokemon-card/pokemon-card').then(m => m.PokemonCard),
+  },
 ]
