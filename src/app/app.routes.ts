@@ -1,18 +1,25 @@
 import { Routes } from '@angular/router'
-import { Dashboard } from './features/dashboard/dashboard'
 
 export const routes: Routes = [
   {
-    path: 'dashboard',
-    component: Dashboard,
+    path: '',
+    redirectTo: 'pokedex',
+    pathMatch: 'full',
   },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'dashboard',
+    path: 'pokedex',
+    loadComponent: () => import('./features/pokemon-list/pokemon-list').then(m => m.PokemonList),
   },
   {
     path: 'pokemon/:name',
     loadComponent: () => import('./features/pokemon-card/pokemon-card').then(m => m.PokemonCard),
+  },
+  {
+    path: 'random',
+    loadComponent: () => import('./features/pokemon-card/pokemon-card').then(m => m.PokemonCard),
+  },
+  {
+    path: '**',
+    redirectTo: 'pokedex',
   },
 ]

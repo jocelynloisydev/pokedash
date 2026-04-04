@@ -1,0 +1,45 @@
+.container {
+  height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.desktop-menu {
+  display: flex;
+  gap: 10px;
+}
+
+.burger {
+  display: none;
+}
+
+.mobile-menu {
+  width: 220px;        // évite le menu géant
+  padding: 10px;
+}
+
+.content {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+}

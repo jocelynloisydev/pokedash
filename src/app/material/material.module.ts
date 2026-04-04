@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatGridListModule } from '@angular/material/grid-list'
+import { MatSidenavModule } from '@angular/material/sidenav'
 
 @NgModule({
   exports: [
@@ -20,6 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list'
     MatToolbarModule,
     MatPaginatorModule,
     MatGridListModule,
+    MatSidenavModule,
   ],
 })
 export class MaterialModule {}
