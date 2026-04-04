@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common'
 import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { PokemonCard } from '../pokemon-card/pokemon-card'
 import { MaterialModule } from '../../material/material.module'
+import { PokemonList } from '../pokemon-list/pokemon-list'
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MaterialModule, PokemonCard],
+  imports: [CommonModule, MaterialModule, PokemonCard, PokemonList],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

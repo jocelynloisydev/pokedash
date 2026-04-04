@@ -26,7 +26,15 @@ export class Pokeapi {
 
   getRandomPokemon() {
     const randomId = Math.floor(Math.random() * 898) + 1 // Génération 1 à 8
-    console.log('🎲 ID aléatoire généré :', randomId);
+    console.log('🎲 ID aléatoire généré :', randomId)
     return this.getPokemon(randomId)
+  }
+
+  getPokemonPage(limit: number, offset: number) {
+    return this.http.get<any>(`${this.baseUrl}/pokemon?limit=${limit}&offset=${offset}`)
+  }
+
+  getPokemonByName(name: string) {
+    return this.http.get<any>(`${this.baseUrl}/pokemon/${name}`)
   }
 }

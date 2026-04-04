@@ -1,0 +1,37 @@
+<div class="pokemon-list-container">
+
+  <ng-container *ngIf="!loading(); else loadingTpl">
+
+    <div class="pokemon-grid">
+      <div class="pokemon-mini-card" *ngFor="let p of pokemons()">
+
+        <img
+          [src]="p.sprites?.other?.['official-artwork']?.front_default || p.sprites?.front_default"
+          [alt]="p.name"
+        />
+
+        <h3>{{ p.name | titlecase }}</h3>
+
+        <div class="types">
+          <span class="type" *ngFor="let t of p.types || []">
+            {{ t.type.name }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <mat-paginator
+      [length]="totalCount()"
+      [pageSize]="limit"
+      [pageIndex]="page()"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <app-loader></app-loader>
+  </ng-template>
+
+</div>
