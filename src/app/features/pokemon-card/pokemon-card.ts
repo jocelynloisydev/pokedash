@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { MaterialModule } from '../../material/material.module'
@@ -13,8 +13,8 @@ import { Loader } from '../../shared/components/loader/loader'
   styleUrl: './pokemon-card.scss',
 })
 export class PokemonCard implements OnInit {
-  pokemon: any = null
-  loading = true
+  pokemon = signal<any>(null)
+  loading = signal(true)
 
   constructor(private pokeapi: Pokeapi) {}
 
@@ -23,14 +23,12 @@ export class PokemonCard implements OnInit {
   }
 
   loadRandomPokemon() {
-    this.loading = true
+    this.loading.set(true)
+
     this.pokeapi.getRandomPokemon().subscribe({
       next: res => {
-        this.pokemon = res
-        this.loading = false
-      },
-      error: () => {
-        this.loading = false
+        this.pokemon.set(res)
+        this.loading.set(false)
       },
     })
   }

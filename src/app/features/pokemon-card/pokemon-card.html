@@ -1,22 +1,22 @@
-<mat-card class="pokemon-card" *ngIf="pokemon; else loadingTpl">
+<mat-card class="pokemon-card" *ngIf="!loading(); else loadingTpl">
   <mat-card-header>
-    <mat-card-title>{{ pokemon.name | titlecase }}</mat-card-title>
-    <mat-card-subtitle>#{{ pokemon.id }}</mat-card-subtitle>
+    <mat-card-title>{{ pokemon().name | titlecase }}</mat-card-title>
+    <mat-card-subtitle>#{{ pokemon().id }}</mat-card-subtitle>
   </mat-card-header>
 
   <img
     mat-card-image
-    [src]="pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default"
-    alt="{{ pokemon.name }}"
+    [src]="pokemon().sprites?.other?.['official-artwork']?.front_default || pokemon().sprites?.front_default"
+    alt="{{ pokemon().name }}"
   />
 
   <mat-card-content>
     <section class="types">
-      <app-type-chip *ngFor="let t of pokemon.types" [type]="t.type.name"></app-type-chip>
+      <app-type-chip *ngFor="let t of pokemon().types || []" [type]="t.type.name"></app-type-chip>
     </section>
 
     <section class="stats">
-      <div class="stat" *ngFor="let s of pokemon.stats">
+      <div class="stat" *ngFor="let s of pokemon().stats || []">
         <span>{{ s.stat.name | titlecase }}</span>
         <mat-progress-bar mode="determinate" [value]="s.base_stat"></mat-progress-bar>
       </div>

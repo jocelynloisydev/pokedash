@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MatCardModule } from '@angular/material/card'
-import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { PokemonCard } from '../pokemon-card/pokemon-card'
 import { MaterialModule } from '../../material/material.module'
@@ -9,24 +7,28 @@ import { MaterialModule } from '../../material/material.module'
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MaterialModule, MatCardModule, MatProgressBarModule, PokemonCard],
+  imports: [CommonModule, MaterialModule, PokemonCard],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard implements OnInit {
-  pokemonCount: number | null = null
-  loading = true
+export class Dashboard {
+  pokemonCount = signal<number | null>(null)
+  loading = signal(true)
 
-  constructor(private pokeapi: Pokeapi) {}
+  constructor(private pokeapi: Pokeapi) {
+    this.loadCount()
+  }
 
-  ngOnInit() {
+  loadCount() {
+    this.loading.set(true)
+
     this.pokeapi.getPokemonCount().subscribe({
       next: res => {
-        this.pokemonCount = res.count
-        this.loading = false
+        this.pokemonCount.set(res.count)
+        this.loading.set(false)
       },
       error: () => {
-        this.loading = false
+        this.loading.set(false)
       },
     })
   }
