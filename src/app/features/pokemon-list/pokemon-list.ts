@@ -1,10 +1,10 @@
-import { Component, signal, computed } from '@angular/core'
+import { Component, signal, computed, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MaterialModule } from '../../material/material.module'
 import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { Loader } from '../../shared/components/loader/loader'
 import { firstValueFrom } from 'rxjs'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-pokemon-list',
@@ -13,7 +13,7 @@ import { Router } from '@angular/router'
   templateUrl: './pokemon-list.html',
   styleUrl: './pokemon-list.scss',
 })
-export class PokemonList {
+export class PokemonList implements OnInit {
   limit = 20
 
   page = signal(0)
@@ -25,8 +25,16 @@ export class PokemonList {
 
   constructor(
     private pokeapi: Pokeapi,
-    private router: Router
-  ) {
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    // Lecture de la page depuis l’URL
+    const pageFromUrl = Number(this.route.snapshot.queryParamMap.get('page') || 0)
+    this.page.set(pageFromUrl)
+
+    // Chargement de la bonne page
     this.loadPage()
   }
 
@@ -74,6 +82,14 @@ export class PokemonList {
 
   onPageChange(event: any) {
     this.page.set(event.pageIndex)
+
+    // Mise à jour de l’URL pour permettre le bouton Retour
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.page() },
+      queryParamsHandling: 'merge',
+    })
+
     this.loadPage()
   }
 
@@ -83,7 +99,9 @@ export class PokemonList {
   }
 
   openPokemon(name: string) {
-    this.router.navigate(['/pokemon', name])
+    this.router.navigate(['/pokemon', name], {
+      state: { page: this.page() },
+    })
   }
 }
 

@@ -4,7 +4,7 @@ import { Pokeapi } from '../../core/pokeapi/pokeapi'
 import { MaterialModule } from '../../material/material.module'
 import { TypeChip } from '../../shared/components/type-chip/type-chip'
 import { Loader } from '../../shared/components/loader/loader'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-pokemon-card',
@@ -19,7 +19,8 @@ export class PokemonCard implements OnInit {
 
   constructor(
     private pokeapi: Pokeapi,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   typeColors: Record<string, string> = {
@@ -81,4 +82,13 @@ export class PokemonCard implements OnInit {
     const type = this.pokemon()?.types?.[0]?.type?.name
     return this.typeColors[type] || '#f5f5f5'
   }
+
+  goBack() {
+    this.router.navigate(['/pokedex'], {
+      queryParams: {
+        page: history.state?.page ?? 0
+      }
+    });
+  }
+
 }
