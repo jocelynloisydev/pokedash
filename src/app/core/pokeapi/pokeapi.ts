@@ -15,10 +15,8 @@ export class Pokeapi {
   }
 
   getPokemon(id: number) {
-    console.log('➡️ Appel API getPokemon(', id, ')')
     return this.http.get<any>(`${this.baseUrl}/pokemon/${id}`).pipe(
       map(res => {
-        console.log('⬅️ Réponse API getPokemon :', res)
         return res
       })
     )
@@ -26,7 +24,6 @@ export class Pokeapi {
 
   getRandomPokemon() {
     const randomId = Math.floor(Math.random() * 898) + 1 // Génération 1 à 8
-    console.log('🎲 ID aléatoire généré :', randomId)
     return this.getPokemon(randomId)
   }
 
